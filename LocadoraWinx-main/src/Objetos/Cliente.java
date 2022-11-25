@@ -16,7 +16,7 @@ public class Cliente {
     private String Nome;
     private String CPF;
     private String Sexo;
-    private String Endereço;
+    private String Endereco;
     private String Cidade;
     private String Estado;
     private String email;
@@ -25,11 +25,11 @@ public class Cliente {
     public Cliente(){
     }
 
-    public Cliente(String Nome, String CPF, String Sexo, String Endereço, String Cidade, String Estado) {
+    public Cliente(String Nome, String CPF, String Sexo, String Endereco, String Cidade, String Estado) {
         this.Nome = Nome;
         this.CPF = CPF;
         this.Sexo = Sexo;
-        this.Endereço = Endereço;
+        this.Endereco = Endereco;
         this.Cidade = Cidade;
         this.Estado = Estado;
         this.email = email;
@@ -37,11 +37,11 @@ public class Cliente {
         
     }
     
-     public void IncluirCliente(String Nome, String CPF, String Sexo, String Endereço, String Cidade, String Estado, String email, String telefone) {
+     public void IncluirCliente(String Nome, String CPF, String Sexo, String Endereco, String Cidade, String Estado, String email, String telefone) {
         this.Nome = Nome;
         this.CPF = CPF;
         this.Sexo = Sexo;
-        this.Endereço = Endereço;
+        this.Endereco = Endereco;
         this.Cidade = Cidade;
         this.Estado = Estado;
         this.email = email;
@@ -89,12 +89,12 @@ public class Cliente {
         this.Sexo = Sexo;
     }
 
-    public String getEndereço() {
-        return Endereço;
+    public String getEndereco() {
+        return Endereco;
     }
 
-    public void setEndereço(String Endereço) {
-        this.Endereço = Endereço;
+    public void setEndereco(String Endereco) {
+        this.Endereco = Endereco;
     }
 
     public String getCidade() {
@@ -117,7 +117,7 @@ public class Cliente {
     this.Nome = ("");
     this.CPF = ("");
     this.Sexo = ("");
-    this.Endereço = ("");
+    this.Endereco = ("");
     this.Cidade = ("");
     this.Estado = ("");
     this.email = "";

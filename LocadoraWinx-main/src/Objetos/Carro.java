@@ -95,4 +95,14 @@ public class Carro {
     public void setModelo(String Modelo) {
         this.Modelo = Modelo;
     }
+public void LimparCARRO(){
+    this.Modelo = ("");
+    this.ano = ("");
+    this.Classe = ("");
+    this.cor = ("");
+    this.Marca = ("");
+    this.Placa = "";
+    this.Disponivel = "";
+
+    }
 }

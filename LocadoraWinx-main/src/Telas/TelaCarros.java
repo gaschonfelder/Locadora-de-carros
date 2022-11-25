@@ -3,186 +3,41 @@ import Conexões.MySQL;
 import Objetos.Carro;
 import Objetos.Cliente;
 import java.awt.Toolkit;
-import java.util.function.Consumer;
+import Objetos.Alugar;
+import Objetos.Aluguel;
 import javax.swing.JOptionPane;
 public class TelaCarros extends javax.swing.JFrame {
     MySQL conectar = new MySQL();
     Carro novoCarro = new Carro();
     Cliente novoCliente = new Cliente();
+    Aluguel novoAluguel = new Aluguel();
     public TelaCarros() {
         initComponents();
         this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Imagens//123456.png"))); // Define Icone
-    }
-    public void buscarCliente (Cliente novo){
-            this.conectar.conectaBanco();
+        CmbCarros.removeAllItems();
+        this.conectar.conectaBanco();
+    try{
+        this.conectar.executarSQL(
+            "SELECT "
+                +"modelo"
+            +" FROM "
+                +"cadastrocarro"
+        );
+        while(this.conectar.getResultSet().next()){
             
-            String consultaCpf = this.txtCPF.getText();
-            
-            try {
-                this.conectar.executarSQL(
-                "SELECT "
-                + "nome,"
-              + " FROM "
-                + "cadastroclientes"
-              + " WHERE "
-                +"cpf = '" + consultaCpf + "'" + ";"
-            );
-            
-            while (this.conectar.getResultSet().next()){
-                novo.setNome(this.conectar.getResultSet().getString(1));
-                
-            }
-            if(novo.getCPF()==""){
-                JOptionPane.showMessageDialog(null, "Cliente não encontrado!");
-                System.out.println("Cliente não encontrado! ");
-            }
-            }catch (Exception e){
-                System.out.println("Erro ao consultar clinte "+ e.getMessage());
-                JOptionPane.showMessageDialog(null, "Erro ao buscar cliente!");
-            }finally{
-                txtNomeCliente.setText(novo.getNome());
-                this.conectar.fechaBanco();
-                JOptionPane.showMessageDialog(null, "Cliente Localizado!");
-            }
+            CmbCarros.addItem(this.conectar.getResultSet().getString(1));
         }
-    private void CadastrarCarro(Carro novoCarro){
-            this.conectar.conectaBanco(); // Estabelecendo conexao com o BD
+        
             
-            novoCarro.setModelo(txtModelo.getText());
-            novoCarro.setClasse((String)cbClasse.getSelectedItem());
-            novoCarro.setAno(txtAno.getText());
-            novoCarro.setCor(txtCor.getText());
-            novoCarro.setMarca(txtMarca.getText());
-            novoCarro.setPlaca(txtPlaca.getText());
-            
-            
-            try{
-                this.conectar.insertSQL("INSERT INTO cadastrocarro("
-                +"modelo,"
-                +"classe,"
-                +"ano,"
-                +"cor,"
-                +"marca,"
-                +"placa"
-                +") VALUES ("
-                +"'"+novoCarro.getModelo()+"',"
-                +"'"+novoCarro.getClasse()+"',"
-                +"'"+novoCarro.getAno()+"',"
-                +"'"+novoCarro.getCor()+"',"
-                +"'"+novoCarro.getMarca()+"',"
-                +"'"+novoCarro.getPlaca()+"'"
-                +")");
-                
-            }catch(Exception e){
-                System.out.println("Erro ao cadastrar carro"+e.getMessage());
-                JOptionPane.showMessageDialog(null, "Erro ao cadastrar carro!");
-            }finally{
-                this.conectar.fechaBanco();
-                JOptionPane.showMessageDialog(null, "Carro Cadastrado com Sucesso");
-                System.out.println("Teste");
-            }
-    }
-        public void buscarCarro (Carro novoCarro){
-            this.conectar.conectaBanco();
-            
-            String consultaModelo = this.txtModelo1.getText();
-            String consultaPlaca = this.txtPlaca1.getText();
-            try {
-                this.conectar.executarSQL(
-                "SELECT "
-                +"modelo,"
-                +"classe,"
-                +"ano,"
-                +"cor,"
-                +"marca,"
-                +"placa"
-              + " FROM "
-                + "cadastrocarro"
-              + " WHERE "
-                +"modelo = '" + consultaModelo + "'"
-              + " AND "
-                +"placa = '" + consultaPlaca + "'" + ";"
-            );
-            
-            while (this.conectar.getResultSet().next()){
-                novoCarro.setModelo(this.conectar.getResultSet().getString(1));
-                novoCarro.setClasse(this.conectar.getResultSet().getString(2));
-                novoCarro.setAno(this.conectar.getResultSet().getString(3));
-                novoCarro.setCor(this.conectar.getResultSet().getString(4));
-                novoCarro.setMarca(this.conectar.getResultSet().getString(5));
-                novoCarro.setPlaca(this.conectar.getResultSet().getString(6));
-                
-            }
-            if(novoCarro.getModelo()==""){
-                JOptionPane.showMessageDialog(null, "Carro não encontrado!");
-                System.out.println("Carro não encontrado! ");
-            }
             }catch (Exception e){
-                System.out.println("Erro ao buscar carro "+ e.getMessage());
+                System.out.println("Erro ao consultar carro "+ e.getMessage());
                 JOptionPane.showMessageDialog(null, "Erro ao buscar carro!");
             }finally{
-                
-                txtModelo1.setText(novoCarro.getModelo());
-                txtClasse1.setText(novoCarro.getClasse());
-                txtAno1.setText(novoCarro.getAno());
-                txtCor1.setText(novoCarro.getCor());
-                txtMarca1.setText(novoCarro.getMarca());
-                txtPlaca1.setText(novoCarro.getPlaca());
-                txtDisp1.setText(novoCarro.getDisponivel());
-                this.conectar.fechaBanco();
-                JOptionPane.showMessageDialog(null, "Carro Localizado!");
-            }
-        }
-    public void atualizarCarro(Carro novoCarro){
-            this.conectar.conectaBanco();
-            String consultaModelo = this.txtModelo1.getText();
-            String consultaPlaca = this.txtPlaca1.getText();
             
-            try {
-                this.conectar.updateSQL(
-                "UPDATE cadastrocarro SET "
-                + "modelo = '" + txtModelo1.getText()+ "', "
-                + "classe = '" + txtClasse1.getText()+ "', "
-                + "ano = '"+ txtAno1.getText()+ "', "
-                + "cor = '"+ txtCor1.getText()+"', "
-                + "marca = '"+ txtMarca1.getText()+"',"
-                + "placa = '"+ txtPlaca1.getText()+"'"
-                + " WHERE "
-                    +"modelo = '" + consultaModelo + "'"
-                + " AND "
-                    +"placa = '" + consultaPlaca + "'" + ";"
-            );
-                
-            }catch (Exception e){
-                System.out.println("Erro ao atualizar carro "+ e.getMessage());
-                JOptionPane.showMessageDialog(null, "Erro ao atualizar carro!");
-            }finally{
-                novoCarro.setDisponivel(txtDisp1.getText());
-                this.conectar.fechaBanco();
-                JOptionPane.showMessageDialog(null, "Carro atualizado com sucesso!");
-            }            
-        }
-    public void excluirCarro(Carro novoCarro){
-            this.conectar.conectaBanco();
-            String consultaModelo = this.txtModelo1.getText();
-            String consultaPlaca = this.txtPlaca1.getText();
-            
-            try {
-                this.conectar.updateSQL(
-                "DELETE FROM cadastrocarro WHERE "
-                +"modelo = '" + consultaModelo + "'"+ " AND "
-                +"placa = '" + consultaPlaca + "'" + ";"    
-                );
-            }catch (Exception e){
-                System.out.println("Erro ao excluir carro  "+ e.getMessage());
-                JOptionPane.showMessageDialog(null, "Erro ao excluir carro!");
-            }finally{
-                
-                this.conectar.fechaBanco();
-                System.out.println("Carro deletado!");
-                JOptionPane.showMessageDialog(null, "Carro excluido com sucesso!");
-            }
-        }
+            this.conectar.fechaBanco();
+    }
+    
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -237,7 +92,7 @@ public class TelaCarros extends javax.swing.JFrame {
         jLabel20 = new javax.swing.JLabel();
         BtnBuscarCliente = new javax.swing.JButton();
         jLabel21 = new javax.swing.JLabel();
-        txtNomeCliente = new javax.swing.JTextField();
+        txtNome = new javax.swing.JTextField();
         txtCPF = new javax.swing.JFormattedTextField();
         jLabel22 = new javax.swing.JLabel();
         CmbCarros = new javax.swing.JComboBox<>();
@@ -251,6 +106,7 @@ public class TelaCarros extends javax.swing.JFrame {
         BtnAlugar = new javax.swing.JButton();
         jLabel28 = new javax.swing.JLabel();
         txtPlacaAlug = new javax.swing.JTextField();
+        BtnBuscarCarro = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel26 = new javax.swing.JLabel();
         jLabel27 = new javax.swing.JLabel();
@@ -304,6 +160,7 @@ public class TelaCarros extends javax.swing.JFrame {
 
         jTabbedPane1.setBackground(new java.awt.Color(64, 10, 90));
         jTabbedPane1.setForeground(new java.awt.Color(255, 255, 255));
+        jTabbedPane1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(50, 0, 60));
@@ -438,7 +295,7 @@ public class TelaCarros extends javax.swing.JFrame {
                     .addComponent(butCad, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
                     .addComponent(butLimpar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(66, 66, 66)
-                .addComponent(lblTeste, javax.swing.GroupLayout.DEFAULT_SIZE, 16, Short.MAX_VALUE)
+                .addComponent(lblTeste, javax.swing.GroupLayout.DEFAULT_SIZE, 15, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -663,7 +520,7 @@ public class TelaCarros extends javax.swing.JFrame {
         jLabel21.setText(" Cliente :");
 
         try {
-            txtCPF.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+            txtCPF.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###-###-###.##")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
@@ -685,12 +542,31 @@ public class TelaCarros extends javax.swing.JFrame {
         jLabel25.setText("Valor: ");
 
         BtnCalcValor.setText("Calcular valor");
+        BtnCalcValor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnCalcValorActionPerformed(evt);
+            }
+        });
 
         BtnAlugar.setText("Alugar");
+        BtnAlugar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnAlugarActionPerformed(evt);
+            }
+        });
 
         jLabel28.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel28.setForeground(new java.awt.Color(50, 0, 60));
         jLabel28.setText("Placa do carro: ");
+
+        BtnBuscarCarro.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        BtnBuscarCarro.setForeground(new java.awt.Color(50, 0, 60));
+        BtnBuscarCarro.setText("Consultar");
+        BtnBuscarCarro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnBuscarCarroActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -701,46 +577,47 @@ public class TelaCarros extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(BtnBuscarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel5Layout.createSequentialGroup()
+                                        .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(jPanel5Layout.createSequentialGroup()
+                                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel5Layout.createSequentialGroup()
+                                            .addComponent(jLabel28)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(txtPlacaAlug))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel5Layout.createSequentialGroup()
+                                            .addComponent(jLabel23)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(SpinDias, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addGroup(jPanel5Layout.createSequentialGroup()
+                                            .addComponent(jLabel24)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(txtClasseAlug, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(jPanel5Layout.createSequentialGroup()
+                                            .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(txtValorAlug))))
+                                .addComponent(BtnCalcValor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(BtnAlugar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(jPanel5Layout.createSequentialGroup()
                                 .addComponent(jLabel22)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(CmbCarros, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(28, 28, 28))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(BtnBuscarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel5Layout.createSequentialGroup()
-                                    .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(txtNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel5Layout.createSequentialGroup()
-                                        .addComponent(jLabel28)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txtPlacaAlug))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel5Layout.createSequentialGroup()
-                                        .addComponent(jLabel23)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(SpinDias, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(jPanel5Layout.createSequentialGroup()
-                                        .addComponent(jLabel24)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txtClasseAlug, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel5Layout.createSequentialGroup()
-                                        .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txtValorAlug))))
-                            .addComponent(BtnCalcValor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(BtnAlugar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(CmbCarros, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(BtnBuscarCarro, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel5Layout.setVerticalGroup(
@@ -757,11 +634,12 @@ public class TelaCarros extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel21, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtNomeCliente, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE))
+                            .addComponent(txtNome, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel22, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(CmbCarros, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE))
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(CmbCarros, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                            .addComponent(BtnBuscarCarro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -780,7 +658,7 @@ public class TelaCarros extends javax.swing.JFrame {
                 .addComponent(BtnCalcValor, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(BtnAlugar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Alugar", jPanel5);
@@ -795,7 +673,7 @@ public class TelaCarros extends javax.swing.JFrame {
         jLabel27.setText(" CPF Cliente: ");
 
         try {
-            txtCPFDev.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+            txtCPFDev.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###-###-###.##")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
@@ -803,6 +681,11 @@ public class TelaCarros extends javax.swing.JFrame {
         BtnBuscarDev.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         BtnBuscarDev.setForeground(new java.awt.Color(50, 0, 60));
         BtnBuscarDev.setText("Consultar");
+        BtnBuscarDev.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnBuscarDevActionPerformed(evt);
+            }
+        });
 
         jLabel29.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel29.setForeground(new java.awt.Color(50, 0, 60));
@@ -821,6 +704,11 @@ public class TelaCarros extends javax.swing.JFrame {
         jLabel32.setText(" Valor:");
 
         BtnFinalizar.setText("Finalizar aluguel");
+        BtnFinalizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnFinalizarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -882,7 +770,7 @@ public class TelaCarros extends javax.swing.JFrame {
                     .addComponent(txtValorDev, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(BtnFinalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(69, Short.MAX_VALUE))
+                .addContainerGap(68, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Devolução", jPanel4);
@@ -1053,19 +941,206 @@ public class TelaCarros extends javax.swing.JFrame {
     }//GEN-LAST:event_ExitMouseClicked
 
     private void butCadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butCadActionPerformed
-        CadastrarCarro(novoCarro);
+        int status=0;
+        conectar.conectaBanco();
+
+        novoCarro = new Carro();
+        novoCarro.setModelo(txtModelo.getText());
+        novoCarro.setAno(txtAno.getText());
+        novoCarro.setCor(txtCor.getText());
+        novoCarro.setMarca(txtMarca.getText());
+        novoCarro.setPlaca(txtPlaca.getText());
+        novoCarro.setClasse((String) cbClasse.getSelectedItem());
+        
+        try {
+            status = this.conectar.insertSQL("INSERT INTO cadastrocarro ("
+                + "modelo,"
+                + "ano,"
+                + "cor,"
+                + "marca,"
+                + "placa,"
+                + "classe"
+                + ") VALUES ("
+                + "'" + novoCarro.getModelo() + "',"
+                + "'" + novoCarro.getAno() + "',"
+                + "'" + novoCarro.getCor() + "',"
+                + "'" + novoCarro.getMarca() + "',"
+                + "'" + novoCarro.getPlaca() + "',"
+                + "'" + novoCarro.getClasse() + "'"
+                + ");");
+            if(status == 1){
+                JOptionPane.showMessageDialog(null, "Carro cadastrado com sucesso");
+                limparCadastro();
+                CmbCarros.removeAllItems();
+        this.conectar.conectaBanco();
+    try{
+        this.conectar.executarSQL(
+            "SELECT "
+                +"modelo"
+            +" FROM "
+                +"cadastrocarro"
+        );
+        while(this.conectar.getResultSet().next()){
+            
+            CmbCarros.addItem(this.conectar.getResultSet().getString(1));
+        }
+        
+            
+            }catch (Exception e){
+                System.out.println("Erro ao consultar carro "+ e.getMessage());
+                JOptionPane.showMessageDialog(null, "Erro ao buscar carro!");
+            }finally{
+            
+            this.conectar.fechaBanco();
+    }
+            }else{JOptionPane.showMessageDialog(null, "Houve algum problema de cadastro");
+            }
+        } catch (Exception e){
+            JOptionPane.showMessageDialog(null, "Houve algum problema com a conexão do servidor");
+        }
+        finally {
+        }
+        conectar.fechaBanco();
+
     }//GEN-LAST:event_butCadActionPerformed
 
     private void butConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butConsultarActionPerformed
-        buscarCarro(novoCarro);
+        conectar.conectaBanco();
+        novoCarro= new Carro();
+
+        String placa = txtPlaca1.getText();
+        try {this.conectar.executarSQL(
+                   "SELECT "
+                    + "modelo,"
+                    + "ano,"
+                    + "cor,"
+                    + "marca,"
+                    + "placa,"
+                    + "classe"
+                 + " FROM"
+                     + " cadastrocarro"
+                 + " WHERE"
+                     + " placa = '" + placa + "'"
+                + ";"
+            );
+        while(conectar.getResultSet().next()){
+            novoCarro.setModelo(conectar.getResultSet().getString(1));
+            novoCarro.setAno(conectar.getResultSet().getString(2));
+            novoCarro.setCor(conectar.getResultSet().getString(3));
+            novoCarro.setMarca(conectar.getResultSet().getString(4));
+            novoCarro.setPlaca(conectar.getResultSet().getString(5));
+            novoCarro.setClasse(conectar.getResultSet().getString(6));
+        }
+        if(novoCarro.getPlaca().equals("")){
+            JOptionPane.showMessageDialog(null, "Houve algum problema ao consultar cadastro");
+        }else{
+        txtModelo1.setText(novoCarro.getModelo());
+        txtAno1.setText(novoCarro.getAno());
+        txtCor1.setText(novoCarro.getCor());
+        txtMarca1.setText(novoCarro.getMarca());
+        txtPlaca1.setText(novoCarro.getPlaca());
+        txtClasse1.setText(novoCarro.getClasse());
+        txtDisp1.setText(novoCarro.getDisponivel());
+        JOptionPane.showMessageDialog(null, "Carro Localizado");
+        }
+        } catch (Exception e) { 
+          JOptionPane.showMessageDialog(null, "Houve algum problema com a conexão do servidor");
+        } finally {  conectar.fechaBanco();
+        }
     }//GEN-LAST:event_butConsultarActionPerformed
 
     private void butAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butAtualizarActionPerformed
-        atualizarCarro(novoCarro);
+        conectar.conectaBanco();
+        boolean status = false;
+
+        String placa = txtPlaca1.getText();
+        try {status = this.conectar.updateSQL(
+                "UPDATE cadastrocarro SET "
+                    + "modelo = '" + txtModelo1.getText() + "',"
+                    + "ano = '" + txtAno1.getText() + "',"
+                    + "cor = '" + txtCor1.getText() + "',"
+                    + "marca = '" + txtMarca1.getText() + "',"
+                    + "placa = '" + txtPlaca1.getText() + "',"
+                    + "classe = '" + txtClasse1.getText() + "'"
+                + " WHERE "
+                    + "placa = '" + placa + "'"
+                + ";"
+            );
+        if(status){JOptionPane.showMessageDialog(null, "Atualização realizada com sucesso");limparConsulta();
+        CmbCarros.removeAllItems();
+        this.conectar.conectaBanco();
+    try{
+        this.conectar.executarSQL(
+            "SELECT "
+                +"modelo"
+            +" FROM "
+                +"cadastrocarro"
+        );
+        while(this.conectar.getResultSet().next()){
+            
+            CmbCarros.addItem(this.conectar.getResultSet().getString(1));
+        }
+        
+            
+            }catch (Exception e){
+                System.out.println("Erro ao consultar carro "+ e.getMessage());
+                JOptionPane.showMessageDialog(null, "Erro ao buscar carro!");
+            }finally{
+            
+            this.conectar.fechaBanco();
+    }
+        }else{ JOptionPane.showMessageDialog(null, "Houve um erro na atualização, tente novamente");
+        }
+        } catch (Exception e) {
+            e.getMessage();
+            JOptionPane.showMessageDialog(null, "Houve um erro na atualização");
+        } finally {conectar.fechaBanco();
+        }
     }//GEN-LAST:event_butAtualizarActionPerformed
 
     private void butExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butExcluirActionPerformed
-        excluirCarro(novoCarro);
+        conectar.conectaBanco();
+        boolean status = false;
+
+        String placa = txtPlaca1.getText();
+        
+        try {
+             status = this.conectar.updateSQL(
+                "DELETE FROM cadastrocarro "
+                + " WHERE "
+                    + "placa = '" + placa + "'"
+                + ";"
+             );
+             if(status){ JOptionPane.showMessageDialog(null, "Deletado com sucesso"); limparConsulta();
+             CmbCarros.removeAllItems();
+        this.conectar.conectaBanco();
+    try{
+        this.conectar.executarSQL(
+            "SELECT "
+                +"modelo"
+            +" FROM "
+                +"cadastrocarro"
+        );
+        while(this.conectar.getResultSet().next()){
+            
+            CmbCarros.addItem(this.conectar.getResultSet().getString(1));
+        }
+        
+            
+            }catch (Exception e){
+                System.out.println("Erro ao consultar carro "+ e.getMessage());
+                JOptionPane.showMessageDialog(null, "Erro ao buscar carro!");
+            }finally{
+            
+            this.conectar.fechaBanco();
+    }
+             }else{
+                JOptionPane.showMessageDialog(null, "Houve um erro ao apagar");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Houve um erro ao apagar Carro");
+        } finally {conectar.fechaBanco();
+        }
     }//GEN-LAST:event_butExcluirActionPerformed
 
     private void butLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butLimparActionPerformed
@@ -1077,8 +1152,221 @@ public class TelaCarros extends javax.swing.JFrame {
     }//GEN-LAST:event_butLimpar1ActionPerformed
 
     private void BtnBuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnBuscarClienteActionPerformed
-        buscarCliente(novoCliente);
+        this.conectar.conectaBanco();
+        novoCliente = new Cliente();
+            String cpf = this.txtCPF.getText();
+            
+            try {
+                this.conectar.executarSQL(
+                "SELECT "
+                + "nome,"
+                + "sexo,"
+                + "endereco,"
+                + "cidade,"
+                + "estado,"
+                + "email,"
+                + "telefone,"
+                + "cpf"        
+              + " FROM "
+                + "cadastroclientes"
+              + " WHERE "
+                +"cpf = '" + cpf + "'" + ";"
+            );
+            
+            while (this.conectar.getResultSet().next()){
+                novoCliente.setNome(this.conectar.getResultSet().getString(1));
+                novoCliente.setSexo(this.conectar.getResultSet().getString(2));
+                novoCliente.setEndereco(this.conectar.getResultSet().getString(3));
+                novoCliente.setCidade(this.conectar.getResultSet().getString(4));
+                novoCliente.setEstado(this.conectar.getResultSet().getString(5));
+                novoCliente.setEmail(this.conectar.getResultSet().getString(6));
+                novoCliente.setTelefone(this.conectar.getResultSet().getString(7));
+                novoCliente.setCPF(this.conectar.getResultSet().getString(8));
+            }
+            if(novoCliente.getCPF()==""){
+                JOptionPane.showMessageDialog(null, "Cliente não encontrado!");
+                System.out.println("Cliente não encontrado! ");
+            }else{
+                txtNome.setText(novoCliente.getNome());
+                txtCPF.setText(novoCliente.getCPF());
+                JOptionPane.showMessageDialog(null, "Cliente Localizado!");
+                System.out.println("Nome: "+novoCliente.getNome());
+                System.out.println("CPF: "+novoCliente.getCPF());
+            }
+            }catch (Exception e){
+                System.out.println("Erro ao consultar clinte "+ e.getMessage());
+                JOptionPane.showMessageDialog(null, "Erro ao buscar cliente!");
+            }finally{
+                
+                this.conectar.fechaBanco();
+                
+            }
     }//GEN-LAST:event_BtnBuscarClienteActionPerformed
+
+    private void BtnBuscarCarroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnBuscarCarroActionPerformed
+        this.conectar.conectaBanco();
+        novoCarro = new Carro();
+            String modelo = (String)CmbCarros.getSelectedItem();
+            
+            try {
+                this.conectar.executarSQL(
+                "SELECT "
+                + "modelo,"
+                + "ano,"
+                + "cor,"
+                + "marca,"
+                + "placa,"
+                + "classe"
+              + " FROM "
+                + "cadastrocarro"
+              + " WHERE "
+                +"modelo = '" + modelo + "'" + ";"
+            );
+            
+            while (this.conectar.getResultSet().next()){
+                novoCarro.setModelo(conectar.getResultSet().getString(1));
+                novoCarro.setAno(conectar.getResultSet().getString(2));
+                novoCarro.setCor(conectar.getResultSet().getString(3));
+                novoCarro.setMarca(conectar.getResultSet().getString(4));
+                novoCarro.setPlaca(conectar.getResultSet().getString(5));
+                novoCarro.setClasse(conectar.getResultSet().getString(6));
+            }
+            if(novoCarro.getModelo()==""){
+                JOptionPane.showMessageDialog(null, "Carro não encontrado!");
+                System.out.println("Carro não encontrado! ");
+            }else{
+                txtPlacaAlug.setText(novoCarro.getPlaca());
+                txtClasseAlug.setText(novoCarro.getClasse());
+            }
+            }catch (Exception e){
+                System.out.println("Erro ao consultar clinte "+ e.getMessage());
+                JOptionPane.showMessageDialog(null, "Erro ao buscar cliente!");
+            }finally{
+                
+                this.conectar.fechaBanco();
+                
+            }
+    }//GEN-LAST:event_BtnBuscarCarroActionPerformed
+
+    private void BtnCalcValorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCalcValorActionPerformed
+        int dial = (int) SpinDias.getValue();
+        Alugar novoAluguel = new Alugar(novoCarro,novoCliente,dial);
+        novoAluguel.CalcularValor(novoCliente, novoCarro);
+        txtValorAlug.setText(String.valueOf(novoAluguel.getValor()));
+    }//GEN-LAST:event_BtnCalcValorActionPerformed
+
+    private void BtnAlugarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAlugarActionPerformed
+        int status=0;
+        conectar.conectaBanco();
+        novoAluguel = new Aluguel();
+        
+        novoAluguel.setCpf(txtCPF.getText());
+        novoAluguel.setCliente(txtNome.getText());
+        novoAluguel.setCarro((String) CmbCarros.getSelectedItem());
+        novoAluguel.setPlaca(txtPlacaAlug.getText());
+        novoAluguel.setDias((int) SpinDias.getValue());
+        novoAluguel.setValor(Integer.parseInt(txtValorAlug.getText()));
+        
+        try {
+            status = this.conectar.insertSQL("INSERT INTO aluguel ("
+                + "cpf,"
+                + "cliente,"
+                + "carro,"
+                + "placa,"
+                + "dias,"
+                + "valor"
+                + ") VALUES ("
+                + "'" + novoAluguel.getCpf() + "',"
+                + "'" + novoAluguel.getCliente() + "',"
+                + "'" + novoAluguel.getCarro() + "',"
+                + "'" + novoAluguel.getPlaca() + "',"
+                + "'" + novoAluguel.getDias() + "',"
+                + "'" + novoAluguel.getValor() + "'"
+                + ");");
+            if(status == 1){
+                JOptionPane.showMessageDialog(null, "Aluguel cadastrado com sucesso");
+                LimparAluguel();
+            }else{JOptionPane.showMessageDialog(null, "Houve algum problema de cadastro");
+            }
+        } catch (Exception e){
+            JOptionPane.showMessageDialog(null, "Houve algum problema com a conexão do servidor");
+        }
+        finally {
+        }
+        conectar.fechaBanco();
+    }//GEN-LAST:event_BtnAlugarActionPerformed
+
+    private void BtnBuscarDevActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnBuscarDevActionPerformed
+        this.conectar.conectaBanco();
+        novoAluguel = new Aluguel();
+            String cpf = this.txtCPFDev.getText();
+            
+            try {
+                this.conectar.executarSQL(
+                "SELECT "
+                + "cpf,"
+                + "cliente,"
+                + "carro,"
+                + "placa,"
+                + "dias,"
+                + "valor"      
+              + " FROM "
+                + "aluguel"
+              + " WHERE "
+                +"cpf = '" + cpf + "'" + ";"
+            );
+            
+            while (this.conectar.getResultSet().next()){
+                novoAluguel.setCpf(this.conectar.getResultSet().getString(1));
+                novoAluguel.setCliente(this.conectar.getResultSet().getString(2));
+                novoAluguel.setCarro(this.conectar.getResultSet().getString(3));
+                novoAluguel.setPlaca(this.conectar.getResultSet().getString(4));
+                novoAluguel.setDias(this.conectar.getResultSet().getInt(5));
+                novoAluguel.setValor(this.conectar.getResultSet().getInt(6));
+            }
+            if(novoCliente.getCPF()==""){
+                JOptionPane.showMessageDialog(null, "Aluguel não encontrado!");
+                System.out.println("Aluguel não encontrado! ");
+            }else{
+                JOptionPane.showMessageDialog(null, "Aluguel Localizado!");
+                txtCPFDev.setText(novoAluguel.getCpf());
+                txtClienteDev.setText(novoAluguel.getCliente());
+                txtCarroDev.setText(novoAluguel.getCarro());
+                txtPlacaDev.setText(novoAluguel.getPlaca());
+                txtValorDev.setText(String.valueOf(novoAluguel.getValor()));
+            }
+            }catch (Exception e){
+                System.out.println("Erro ao consultar clinte "+ e.getMessage());
+                JOptionPane.showMessageDialog(null, "Erro ao buscar cliente!");
+            }finally{
+                
+                this.conectar.fechaBanco();
+                
+            }
+    }//GEN-LAST:event_BtnBuscarDevActionPerformed
+
+    private void BtnFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnFinalizarActionPerformed
+        conectar.conectaBanco();
+        boolean status = false;
+
+        String cpf = txtCPFDev.getText();
+        
+        try {
+             status = this.conectar.updateSQL(
+                "DELETE FROM aluguel "
+                + " WHERE "
+                    + "cpf = '" + cpf + "'"
+                + ";"
+             );
+             if(status){ JOptionPane.showMessageDialog(null, "Aluguel finalizado com sucesso");LimparDevolucao();
+             }else{
+                JOptionPane.showMessageDialog(null, "Houve um erro ao apagar");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Houve um erro ao apagar Aluguel");
+        } finally {conectar.fechaBanco();
+        }
+    }//GEN-LAST:event_BtnFinalizarActionPerformed
     public void limparConsulta(){
         txtModelo1.setText("");
         txtPlaca1.setText("");
@@ -1095,6 +1383,24 @@ public class TelaCarros extends javax.swing.JFrame {
         txtAno.setText("");
         cbClasse.setSelectedIndex(0);
         txtMarca.setText("");
+        
+    }
+    public void LimparAluguel(){
+        txtCPF.setText("");
+        txtNome.setText("");
+        CmbCarros.setSelectedIndex(0);
+        txtPlacaAlug.setText("");
+        SpinDias.setValue(0);
+        txtValorAlug.setText("");
+        txtClasseAlug.setText("");
+    }
+    public void LimparDevolucao(){
+        txtCPFDev.setText("");
+        txtClienteDev.setText("");
+        txtCarroDev.setText("");
+        txtPlacaDev.setText("");
+        txtValorDev.setText("");
+        
     }
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -1106,6 +1412,7 @@ public class TelaCarros extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnAlugar;
+    private javax.swing.JButton BtnBuscarCarro;
     private javax.swing.JButton BtnBuscarCliente;
     private javax.swing.JButton BtnBuscarDev;
     private javax.swing.JButton BtnCalcValor;
@@ -1191,7 +1498,7 @@ public class TelaCarros extends javax.swing.JFrame {
     private javax.swing.JTextField txtMarca1;
     private javax.swing.JTextField txtModelo;
     private javax.swing.JTextField txtModelo1;
-    private javax.swing.JTextField txtNomeCliente;
+    private javax.swing.JTextField txtNome;
     private javax.swing.JTextField txtPlaca;
     private javax.swing.JTextField txtPlaca1;
     private javax.swing.JTextField txtPlacaAlug;

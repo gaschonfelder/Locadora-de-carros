@@ -19,7 +19,7 @@ public class TelaClienteNova extends javax.swing.JFrame {
             novo.setNome(txtNomeCad.getText());
             novo.setCPF(txtCPFCad.getText());
             novo.setSexo(String.valueOf(ComboSex.getSelectedItem()));
-            novo.setEndereço(txtEndCad.getText());
+            novo.setEndereco(txtEndCad.getText());
             novo.setCidade(txtCidadeCad.getText());
             novo.setEstado(String.valueOf(ComboEstado.getSelectedItem()));
             novo.setEmail(txtEmailCad.getText());
@@ -40,7 +40,7 @@ public class TelaClienteNova extends javax.swing.JFrame {
                 +"'"+novo.getNome()+"',"
                 +"'"+novo.getCPF()+"',"
                 +"'"+novo.getSexo()+"',"
-                +"'"+novo.getEndereço()+"',"
+                +"'"+novo.getEndereco()+"',"
                 +"'"+novo.getCidade()+"',"
                 +"'"+novo.getEstado()+"',"
                 +"'"+novo.getEmail()+"',"
@@ -80,7 +80,7 @@ public class TelaClienteNova extends javax.swing.JFrame {
             while (this.conectar.getResultSet().next()){
                 novo.setNome(this.conectar.getResultSet().getString(1));
                 novo.setSexo(this.conectar.getResultSet().getString(2));
-                novo.setEndereço(this.conectar.getResultSet().getString(3));
+                novo.setEndereco(this.conectar.getResultSet().getString(3));
                 novo.setCidade(this.conectar.getResultSet().getString(4));
                 novo.setEstado(this.conectar.getResultSet().getString(5));
                 novo.setEmail(this.conectar.getResultSet().getString(6));
@@ -97,7 +97,7 @@ public class TelaClienteNova extends javax.swing.JFrame {
             }finally{
                 txtNomeConsult.setText(novo.getNome());
                 txtSexoConsult.setText(novo.getSexo());
-                txtEndConsult.setText(novo.getEndereço());
+                txtEndConsult.setText(novo.getEndereco());
                 txtCidadeConsult.setText(novo.getCidade());
                 txtEstadoConsult.setText(novo.getEstado());
                 txtEmailConsult.setText(novo.getEmail());
@@ -132,7 +132,7 @@ public class TelaClienteNova extends javax.swing.JFrame {
             }finally{
                 txtNomeConsult.setText(novoCliente.getNome());
                 txtSexoConsult.setText(novoCliente.getSexo());
-                txtEndConsult.setText(novoCliente.getEndereço());
+                txtEndConsult.setText(novoCliente.getEndereco());
                 txtCidadeConsult.setText(novoCliente.getCidade());
                 txtEstadoConsult.setText(novoCliente.getEstado());
                 txtEmailConsult.setText(novoCliente.getEmail());
@@ -826,6 +826,7 @@ public class TelaClienteNova extends javax.swing.JFrame {
 
     private void BtnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnExcluirActionPerformed
         excluirCliente(cliente);
+        cliente.LimparCliente();
     }//GEN-LAST:event_BtnExcluirActionPerformed
 
     private void BtnCadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCadActionPerformed

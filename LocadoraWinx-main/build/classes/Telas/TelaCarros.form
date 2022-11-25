@@ -82,6 +82,9 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
         </Property>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Segoe UI" size="18" style="1"/>
+        </Property>
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -175,7 +178,7 @@
                           <Component id="butLimpar1" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="66" max="-2" attributes="0"/>
-                      <Component id="lblTeste" pref="16" max="32767" attributes="0"/>
+                      <Component id="lblTeste" pref="15" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -758,59 +761,59 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <Component id="jLabel20" min="-2" pref="94" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="txtCPF" min="-2" pref="177" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" attributes="0">
-                                      <Component id="jLabel22" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="CmbCarros" min="-2" pref="259" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
-                              <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+                              <Component id="jLabel20" min="-2" pref="94" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="txtCPF" min="-2" pref="177" max="-2" attributes="0"/>
+                              <EmptySpace min="147" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Group type="103" alignment="0" groupAlignment="1" attributes="0">
-                                      <Component id="BtnBuscarCliente" alignment="1" min="-2" pref="111" max="-2" attributes="0"/>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Component id="jLabel21" min="-2" pref="65" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="txtNomeCliente" min="-2" pref="325" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
+                                      <Group type="103" alignment="0" groupAlignment="1" attributes="0">
+                                          <Component id="BtnBuscarCliente" alignment="1" min="-2" pref="111" max="-2" attributes="0"/>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Component id="jLabel21" min="-2" pref="65" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="txtNome" min="-2" pref="325" max="-2" attributes="0"/>
+                                          </Group>
                                       </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                              <Group type="102" alignment="0" attributes="0">
+                                                  <Component id="jLabel28" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Component id="txtPlacaAlug" max="32767" attributes="0"/>
+                                              </Group>
+                                              <Group type="102" alignment="0" attributes="0">
+                                                  <Component id="jLabel23" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Component id="SpinDias" min="-2" pref="96" max="-2" attributes="0"/>
+                                              </Group>
+                                          </Group>
+                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                              <Group type="102" alignment="0" attributes="0">
+                                                  <Component id="jLabel24" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Component id="txtClasseAlug" min="-2" pref="64" max="-2" attributes="0"/>
+                                              </Group>
+                                              <Group type="102" attributes="0">
+                                                  <Component id="jLabel25" min="-2" pref="54" max="-2" attributes="0"/>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Component id="txtValorAlug" max="32767" attributes="0"/>
+                                              </Group>
+                                          </Group>
+                                      </Group>
+                                      <Component id="BtnCalcValor" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="BtnAlugar" alignment="0" max="32767" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
-                                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Component id="jLabel28" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="txtPlacaAlug" max="32767" attributes="0"/>
-                                          </Group>
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Component id="jLabel23" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="SpinDias" min="-2" pref="96" max="-2" attributes="0"/>
-                                          </Group>
-                                      </Group>
-                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Component id="jLabel24" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="txtClasseAlug" min="-2" pref="64" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Group type="102" attributes="0">
-                                              <Component id="jLabel25" min="-2" pref="54" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="txtValorAlug" max="32767" attributes="0"/>
-                                          </Group>
-                                      </Group>
+                                      <Component id="jLabel22" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="CmbCarros" min="-2" pref="143" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="BtnBuscarCarro" min="-2" pref="111" max="-2" attributes="0"/>
                                   </Group>
-                                  <Component id="BtnCalcValor" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="BtnAlugar" alignment="0" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
@@ -833,12 +836,13 @@
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Component id="jLabel21" max="32767" attributes="0"/>
-                                  <Component id="txtNomeCliente" pref="30" max="32767" attributes="0"/>
+                                  <Component id="txtNome" pref="30" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="jLabel22" max="32767" attributes="0"/>
-                                  <Component id="CmbCarros" pref="30" max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="jLabel22" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                                  <Component id="CmbCarros" alignment="3" pref="30" max="32767" attributes="0"/>
+                                  <Component id="BtnBuscarCarro" alignment="3" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
@@ -864,7 +868,7 @@
                       <Component id="BtnCalcValor" min="-2" pref="30" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="BtnAlugar" min="-2" pref="40" max="-2" attributes="0"/>
-                      <EmptySpace pref="33" max="32767" attributes="0"/>
+                      <EmptySpace pref="31" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -918,12 +922,12 @@
                 <Property name="text" type="java.lang.String" value=" Cliente :"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="txtNomeCliente">
+            <Component class="javax.swing.JTextField" name="txtNome">
             </Component>
             <Component class="javax.swing.JFormattedTextField" name="txtCPF">
               <Properties>
                 <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor" preCode="try {" postCode="} catch (java.text.ParseException ex) {&#xa;ex.printStackTrace();&#xa;}">
-                  <Format format="###.###.###-##" subtype="-1" type="5"/>
+                  <Format format="###-###-###.##" subtype="-1" type="5"/>
                 </Property>
               </Properties>
             </Component>
@@ -991,11 +995,17 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Calcular valor"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtnCalcValorActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="BtnAlugar">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Alugar"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtnAlugarActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel28">
               <Properties>
@@ -1009,6 +1019,20 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtPlacaAlug">
+            </Component>
+            <Component class="javax.swing.JButton" name="BtnBuscarCarro">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Segoe UI" size="14" style="1"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="3c" green="0" red="32" type="rgb"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Consultar"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtnBuscarCarroActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -1094,7 +1118,7 @@
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="BtnFinalizar" min="-2" pref="38" max="-2" attributes="0"/>
-                      <EmptySpace pref="69" max="32767" attributes="0"/>
+                      <EmptySpace pref="68" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -1126,7 +1150,7 @@
             <Component class="javax.swing.JFormattedTextField" name="txtCPFDev">
               <Properties>
                 <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor" preCode="try {" postCode="} catch (java.text.ParseException ex) {&#xa;ex.printStackTrace();&#xa;}">
-                  <Format format="###.###.###-##" subtype="-1" type="5"/>
+                  <Format format="###-###-###.##" subtype="-1" type="5"/>
                 </Property>
               </Properties>
             </Component>
@@ -1140,6 +1164,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Consultar"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtnBuscarDevActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel29">
               <Properties>
@@ -1197,6 +1224,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Finalizar aluguel"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtnFinalizarActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

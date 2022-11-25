@@ -1,23 +1,14 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Objetos;
-
-/**
- *
- * @author Gabriel
- */
 public class Alugar {
     private Carro carro;
     private Cliente cliente;
     private int valor;
     private int QtdDias; 
-
-    public Alugar(Carro carro, Cliente cliente, int valor, int QtdDias) {
+            
+            
+    public Alugar(Carro carro, Cliente cliente,int QtdDias) {
         this.carro = carro;
         this.cliente = cliente;
-        this.valor = valor;
         this.QtdDias = QtdDias;
         
     }
@@ -65,10 +56,13 @@ public class Alugar {
                 break;
             case "Classe B":
                 this.valor = this.QtdDias * 180;
+                break;
             case "Classe C":
                 this.valor = this.QtdDias * 200;
+                break;
             case "Classe D":
                 this.valor = this.QtdDias * 250;
+                break;
                 
         }
         
